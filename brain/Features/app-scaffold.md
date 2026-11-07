@@ -32,12 +32,12 @@ Bootstrap the two-stack foundation for the project: a Rails 8.1 API-only backend
 ## Tasks
 
 ### Stage 1: Independent scaffolds
-- [ ] **T1.1** — Rails 8.1 API-only app: MVC skeleton, `aleguro/odsl` gem added and wired as the service-object layer for business logic, Devise + devise-jwt installed and configured | Stack: rails | Size: M | Human: 4h
-- [ ] **T1.2** — React 19.2 app: Vite/CRA skeleton, React Query provider, MUI theme provider wired | Stack: react | Size: M | Human: 3h
-- [ ] **T1.3** — `docker-compose.yml` + per-app Dockerfiles: rails service, postgres service, react service, all dev-mode with volume mounts | Stack: infra | Size: S | Human: 2h
+- [x] **T1.1** — Rails 8.1 API-only app: MVC skeleton, `aleguro/odsl` gem added and wired as the service-object layer for business logic, Devise + devise-jwt installed and configured | Stack: rails | Size: M | Human: 4h
+- [x] **T1.2** — React 19.2 app: Vite/CRA skeleton, React Query provider, MUI theme provider wired | Stack: react | Size: M | Human: 3h
+- [x] **T1.3** — `docker-compose.yml` + per-app Dockerfiles: rails service, postgres service, react service, all dev-mode with volume mounts | Stack: infra | Size: S | Human: 2h
 
 ### Stage 2: Auth flow wired end-to-end
-- [ ] **T2.1** — Signup/login/logout controllers (thin) delegating to ODSL service objects for user creation, authentication and JWT issuance/revocation (devise-jwt, denylist strategy) | Stack: rails | Size: M | Human: 4h
+- [x] **T2.1** — Signup/login/logout controllers (thin) delegating to ODSL service objects for user creation, authentication and JWT issuance/revocation (devise-jwt, denylist strategy) | Stack: rails | Size: M | Human: 4h
 - [ ] **T2.2** — Login/signup screens (MUI forms) + React Query mutations calling the API, JWT stored and attached to subsequent requests | Stack: react | Size: M | Human: 4h
 
 ## Decisions

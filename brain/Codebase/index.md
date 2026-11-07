@@ -12,4 +12,5 @@ _Most important entry points and what they do._
 
 ## Gotchas
 
-_Things that surprised someone and are worth remembering._
+- [[devise-jwt-session-store-false]] — `sign_in` must pass `store: false` or JWT revocation silently doesn't work
+- [[odsl-install-generator-rails-8-1-bug]] — `odsl:install` generator crashes on Rails 8.1, worked around by hand-writing the migration
