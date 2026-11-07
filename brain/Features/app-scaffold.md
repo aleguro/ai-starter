@@ -7,7 +7,7 @@ status: draft
 type: feature
 spec: docs/superpowers/specs/2026-11-07-app-scaffold.md
 branch: feature/app-scaffold
-layers_committed: [spec]
+layers_committed: [spec, api]
 ---
 
 # App Scaffold (Rails API + React)
