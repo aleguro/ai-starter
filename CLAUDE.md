@@ -1,4 +1,4 @@
-# {{PROJECT_NAME}} — Instructions for Claude Code
+# my-project — Instructions for Claude Code
 
 ## Project structure
 
@@ -9,8 +9,6 @@ For monorepos, list the stacks and their directories:
 apps/
   rails-app/       ← Rails API
   react-app/       ← React frontend
-services/
-  python-service/  ← Python microservice
 infra/             ← Terraform / Docker / CI
 brain/
   Features/        ← ticket system: one note per feature, tracks status
@@ -204,3 +202,13 @@ Each layer ends in exactly one commit, gated on `ai_blob_score` / `spec_drift` (
 | Test planning | `playwright-test-planner` | sonnet | Browser exploration + source analysis |
 | Spec generation | `playwright-test-generator` | sonnet | Drive scenarios + write code |
 | Spec healing | `playwright-test-healer` | sonnet | Debug + surgical edits |
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).

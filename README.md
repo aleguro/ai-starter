@@ -66,7 +66,7 @@ make bootstrap PROJECT=my-project
 ```
 
 Bootstrap does:
-1. Replaces every `{{PROJECT_NAME}}` placeholder in `CLAUDE.md`, `README.md`, and `brain/CLAUDE.md`
+1. Replaces every `my-project` placeholder in `CLAUDE.md`, `README.md`, and `brain/CLAUDE.md`
 2. Configures the `git push-pr` alias
 3. Checks graphify is installed — prints install command if not
 4. Checks the Playwright MCP server is available — prints install command if not
