@@ -1,0 +1,55 @@
+{
+  "feature": "app-scaffold",
+  "generated_at": "2026-11-07T18:54:55Z",
+  "tasks": [
+    {
+      "task": "T1.1",
+      "ts": "2026-11-07T18:23:26Z",
+      "human_estimate": "4h",
+      "human_hours": 4.0
+    },
+    {
+      "task": "T1.2",
+      "ts": "2026-11-07T18:25:33Z",
+      "human_estimate": "3h",
+      "human_hours": 3.0
+    },
+    {
+      "task": "T1.3",
+      "ts": "2026-11-07T18:28:24Z",
+      "human_estimate": "2h",
+      "human_hours": 2.0
+    },
+    {
+      "task": "T2.1",
+      "ts": "2026-11-07T18:39:07Z",
+      "human_estimate": "4h",
+      "human_hours": 4.0
+    },
+    {
+      "task": "T2.2",
+      "ts": "2026-11-07T18:48:46Z",
+      "human_estimate": "4h",
+      "human_hours": 4.0
+    }
+  ],
+  "ai": {
+    "session_minutes": 25.3,
+    "session_hours": 0.42,
+    "cost_usd": 0.0,
+    "cost_by_model": {}
+  },
+  "human": {
+    "estimated_hours": 17.0,
+    "estimated_cost_usd": 1275.0,
+    "hourly_rate_usd": 75,
+    "note": "Senior dev rate. Adjust HOURLY_RATE_USD in metric-logger.sh."
+  },
+  "comparison": {
+    "hours_saved": 16.58,
+    "cost_saved_usd": 1275.0,
+    "speed_multiplier": 40.5,
+    "tasks_with_estimates": 5,
+    "tasks_without_estimates": 0
+  }
+}
