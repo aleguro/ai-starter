@@ -1,16 +1,16 @@
 {
   "branch": "feature-app-scaffold",
-  "generated_at": "2026-11-07T19:09:25Z",
-  "session_minutes": 9.4,
-  "graphify_calls": 2,
-  "brain_docs_read": 1,
-  "brain_docs_written": 1,
-  "file_reads": 8,
-  "file_writes": 0,
-  "test_runs": 3,
+  "generated_at": "2026-11-07T19:12:26Z",
+  "session_minutes": 1.1,
+  "graphify_calls": 0,
+  "brain_docs_read": 0,
+  "brain_docs_written": 0,
+  "file_reads": 2,
+  "file_writes": 1,
+  "test_runs": 1,
   "tasks_completed": 5,
   "tasks_total": 5,
-  "ai_blob_score": 2,
+  "ai_blob_score": 0,
   "spec_drift": "unknown",
   "test_results": {
     "rspec": "15 examples, 0 failures, 2 pending",
@@ -18,8 +18,14 @@
     "playwright": "5 passed (3.3s)"
   },
   "cost": {
-    "total_usd": 0.0,
-    "by_model": {},
+    "total_usd": 0.0194,
+    "by_model": {
+      "sonnet": {
+        "input_tokens": 2186,
+        "output_tokens": 859,
+        "cost_usd": 0.019443
+      }
+    },
     "note": "Log usage with: scripts/metric-logger.sh cost <opus|sonnet|haiku> <input_tokens> <output_tokens>"
   },
   "thresholds": {
@@ -27,5 +33,7 @@
     "spec_drift_max_pct": 10,
     "min_graphify_calls": 2
   },
-  "alerts": []
+  "alerts": [
+    "low graphify usage \u2014 did you query the graph before coding?"
+  ]
 }

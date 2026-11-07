@@ -58,3 +58,9 @@ Final suite results, all re-run after the hook fix below to confirm they're real
 `tasks_completed`/`tasks_total` (5/5) and the test_results above were restored by re-emitting the real task/test events by hand after the hooks were fixed — the originals were lost to gap #2, not fabricated: they match the already-committed `docs/metrics/features/app-scaffold.json` from earlier in the session.
 
 `file_writes` is still 0 in the snapshot above because it was captured before fix #4 landed; it should be nonzero in the next report run.
+
+## One more gap: `token-estimator.sh` had the exact same stdin bug as `test-result-logger.sh`
+
+After the fixes above, `Session cost` in the PR was still `$0.0`. Root cause: `token-estimator.sh` read its PostToolUse payload with `python3 - <<'PYEOF' ... PYEOF <<< "$INPUT"` — the *same* mistake fixed earlier in `test-result-logger.sh` (gap #1's fix). A heredoc body (`<<'PYEOF'`) always wins stdin over an appended here-string, so `json.load(sys.stdin)` got nothing, fell into the `except` branch every time, and the script always computed `0 0` for the response/input lengths — so no `cost_estimate` event was *ever* written, for the whole session.
+
+Fixed the same way: pass the payload through an env var (`HOOK_INPUT`) and read it with `python3 -c "...os.environ['HOOK_INPUT']..."` instead of a heredoc reading stdin. Confirmed live: `cost.total_usd` went from `0.0` to a real, nonzero value (`0.0194` after a handful of tool calls) in the very next report.
