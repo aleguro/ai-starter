@@ -1,7 +1,7 @@
 # Vault — Instructions for Claude Code
 
 ## What is this vault
-Knowledge base for **{{PROJECT_NAME}}**. Persistent memory across sessions.
+Knowledge base for **my-project**. Persistent memory across sessions.
 
 ## Folder structure
 
