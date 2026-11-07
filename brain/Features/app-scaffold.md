@@ -3,11 +3,11 @@ title: App Scaffold (Rails API + React)
 tags: [feature, scaffold, auth]
 created: 2026-11-07
 updated: 2026-11-07
-status: draft
+status: shipped
 type: feature
 spec: docs/superpowers/specs/2026-11-07-app-scaffold.md
 branch: feature/app-scaffold
-layers_committed: [spec, api, app]
+layers_committed: [spec, api, app, qa, stats]
 ---
 
 # App Scaffold (Rails API + React)
@@ -27,7 +27,7 @@ Bootstrap the two-stack foundation for the project: a Rails 8.1 API-only backend
 - [x] `apps/react-app` boots as a React 19.2 app with React Query + MUI, has a working login screen talking to the API
 - [x] `docker compose up` boots Rails + Postgres + React together with no host-installed toolchain required
 - [x] A registered user can sign up and log in end-to-end (API ↔ React), verified by Playwright
-- [ ] No regressions in the existing suite
+- [x] No regressions in the existing suite (no prior suite — first feature in the repo)
 
 ## Tasks
 
@@ -48,4 +48,8 @@ Bootstrap the two-stack foundation for the project: a Rails 8.1 API-only backend
 
 ## Related
 
-_Wikilinks to [[Architecture/]], [[Codebase/]], [[Database/]] notes this feature touches._
+- [[Architecture/index]] — services, data flow, boundaries for the rails/react/postgres stack
+- [[Database/index]] — `users`, `jwt_denylists`, `odsl_*` tables
+- [[Install/index]] — setup steps, env vars
+- [[devise-jwt-session-store-false]], [[odsl-install-generator-rails-8-1-bug]], [[docker-compose-bundle-volume-staleness]], [[yaml-folded-block-scalar-indentation]] — gotchas found while building this
+- [[session-2026-11-07-feature-app-scaffold]], [[app-scaffold-comparison]] — metrics
