@@ -1,17 +1,21 @@
 {
   "branch": "feature-app-scaffold",
-  "generated_at": "2026-11-07T18:54:52Z",
+  "generated_at": "2026-11-07T19:01:01Z",
   "graphify_calls": 0,
   "brain_docs_read": 0,
   "brain_docs_written": 0,
   "file_reads": 0,
   "file_writes": 0,
   "test_runs": 0,
-  "tasks_completed": 5,
-  "tasks_total": 5,
+  "tasks_completed": 0,
+  "tasks_total": 0,
   "ai_blob_score": 0,
   "spec_drift": "unknown",
-  "test_results": {},
+  "test_results": {
+    "rspec": "15 examples, 0 failures, 2 pending",
+    "vitest": "18 passed (18)",
+    "playwright": "5 passed (3.3s)"
+  },
   "cost": {
     "total_usd": 0.0,
     "by_model": {},
