@@ -7,7 +7,7 @@ status: draft
 type: feature
 spec: docs/superpowers/specs/2026-11-07-app-scaffold.md
 branch: feature/app-scaffold
-layers_committed: []
+layers_committed: [spec]
 ---
 
 # App Scaffold (Rails API + React)
@@ -42,7 +42,9 @@ Bootstrap the two-stack foundation for the project: a Rails 8.1 API-only backend
 
 ## Decisions
 
-_Wikilinks to ADRs in [[Decisions/]] created during this feature._
+- [[adr-01-odsl-service-layer]]
+- [[adr-02-jwt-revocation-denylist]]
+- [[adr-03-dockerized-dev-default]]
 
 ## Related
 
