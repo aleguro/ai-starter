@@ -54,9 +54,10 @@
       "alerts": "string[] \u2014 threshold violations (includes cost > $5 alert)"
     }
   },
-  "avg_tool_calls": 31.0,
-  "sample_count": 1,
+  "avg_tool_calls": 27.5,
+  "sample_count": 2,
   "samples": [
-    31
+    31,
+    24
   ]
 }
