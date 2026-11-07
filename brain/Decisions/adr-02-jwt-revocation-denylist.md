@@ -23,3 +23,7 @@ Use `Devise::JWT::RevocationStrategies::Denylist` — one `jwt_denylist` table, 
 ## Consequences
 
 Easier: minimal schema (one table), straightforward to reason about. Harder: every authenticated request pays a denylist lookup; if the project later needs refresh-token rotation or multi-device session management, this strategy will need to be revisited — track that as a future ADR when it comes up, not now.
+
+## Correction (found during e2e, qa layer)
+
+T1.1 also added a `jti` column on `users` (unique index, `default: ""`), following a generic devise-jwt setup guide. The Denylist strategy never reads or writes that column — it only uses the per-token `jti` claim inside the JWT itself, stored in `jwt_denylists`. Every user ended up with the same default empty-string `jti`, so the **second** user ever created broke signup with a unique-constraint violation — a real production bug, not a test artifact (request specs never saw it: each example rolls back in its own transaction, so two persisted users never coexisted; the Playwright e2e suite, running against a real persisted database, did). Removed in a follow-up migration (`RemoveJtiFromUsers`). See [[devise-jwt-session-store-false]]-adjacent gotcha: only add the `jti` column if actually switching to the JTIMatcher revocation strategy.

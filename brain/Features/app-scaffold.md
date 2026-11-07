@@ -23,10 +23,10 @@ Bootstrap the two-stack foundation for the project: a Rails 8.1 API-only backend
 
 ## Acceptance criteria
 
-- [ ] `apps/rails-app` boots as an API-only Rails 8.1 app with Devise + `devise-jwt` wired for signup/login/logout
-- [ ] `apps/react-app` boots as a React 19.2 app with React Query + MUI, has a working login screen talking to the API
-- [ ] `docker compose up` boots Rails + Postgres + React together with no host-installed toolchain required
-- [ ] A registered user can sign up and log in end-to-end (API ↔ React), verified by Playwright
+- [x] `apps/rails-app` boots as an API-only Rails 8.1 app with Devise + `devise-jwt` wired for signup/login/logout
+- [x] `apps/react-app` boots as a React 19.2 app with React Query + MUI, has a working login screen talking to the API
+- [x] `docker compose up` boots Rails + Postgres + React together with no host-installed toolchain required
+- [x] A registered user can sign up and log in end-to-end (API ↔ React), verified by Playwright
 - [ ] No regressions in the existing suite
 
 ## Tasks

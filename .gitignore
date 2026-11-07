@@ -10,3 +10,12 @@ graphify-out/
 /tmp/
 *.graphify-bak
 brain/.obsidian/
+
+# E2E scratch artifacts
+tests/e2e/node_modules/
+tests/e2e/specs/
+tests/e2e/artifacts/
+tests/e2e/.env.local
+!tests/e2e/.env.local.example
+tests/e2e/playwright-report/
+tests/e2e/test-results/

@@ -83,9 +83,9 @@
 
 ## Acceptance Criteria
 
-- [ ] UC-01, UC-02, UC-03, UC-04 work end-to-end in local dev
-- [ ] Tests cover main flow + alternative flows (duplicate email, bad credentials) for each UC
-- [ ] No regressions in the existing suite
+- [x] UC-01, UC-02, UC-03, UC-04 work end-to-end in local dev
+- [x] Tests cover main flow + alternative flows (duplicate email, bad credentials) for each UC
+- [x] No regressions in the existing suite
 - [ ] Metrics within range (see Step 5 of spec-driven-development)
 
 ---
