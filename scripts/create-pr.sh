@@ -37,6 +37,7 @@ print(val)
 }
 
 TOTAL_CALLS=$(wc -l < "$METRICS_FILE" 2>/dev/null | tr -d ' ' || echo 0)
+SESSION_MINUTES=$(_report_val session_minutes "n/a")
 GRAPHIFY_COUNT=$(_report_val graphify_calls)
 BRAIN_READS=$(_report_val brain_docs_read)
 BRAIN_WRITES=$(_report_val brain_docs_written)
@@ -168,6 +169,7 @@ ${COMMIT_SUMMARY}
 
 | Metric | Value |
 |--------|-------|
+| Session time | ${SESSION_MINUTES} min |
 | Session tool calls | ${TOTAL_CALLS} |
 | Token drift | ${DRIFT_STR} |
 | Tasks completed | ${TASKS_DONE} / ${TASKS_TOTAL_VAL} |

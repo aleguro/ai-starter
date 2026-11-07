@@ -61,6 +61,32 @@ _report() {
   TASKS_GREEN=$(grep '"type": "task".*"status": "green"' "$METRICS_FILE" 2>/dev/null | wc -l | tr -d ' ' || true)
   TASKS_TOTAL=$(grep '"type": "task"' "$METRICS_FILE" 2>/dev/null | wc -l | tr -d ' ' || true)
 
+  # Session time: elapsed minutes from the first recorded event (a proxy for
+  # session start — the earliest hook that actually fired) to now. "null"
+  # when the metrics file has nothing yet (nothing fired this session).
+  SESSION_MINUTES="null"
+  if [ -f "$METRICS_FILE" ]; then
+    FIRST_TS=$(head -1 "$METRICS_FILE" 2>/dev/null | python3 -c "
+import json, sys
+try:
+    print(json.loads(sys.stdin.read()).get('ts', ''))
+except Exception:
+    print('')
+" 2>/dev/null || echo "")
+    if [ -n "$FIRST_TS" ]; then
+      SESSION_MINUTES=$(python3 -c "
+from datetime import datetime, timezone
+fmt = '%Y-%m-%dT%H:%M:%SZ'
+try:
+    t0 = datetime.strptime('${FIRST_TS}', fmt).replace(tzinfo=timezone.utc)
+    t1 = datetime.strptime('${TIMESTAMP}', fmt).replace(tzinfo=timezone.utc)
+    print(round((t1 - t0).total_seconds() / 60, 1))
+except Exception:
+    print('null')
+" 2>/dev/null || echo "null")
+    fi
+  fi
+
   # AI blob score: functions/methods > 40 lines in changed files.
   # Python has no closing keyword — a function ends when a line drops back
   # to its own indentation or less, so it's counted by indentation, not by
@@ -134,7 +160,7 @@ print(json.dumps(results))
 
   export BRANCH TIMESTAMP METRICS_FILE TEST_RESULTS_JSON OUT_FILE \
          GRAPHIFY_CALLS BRAIN_READS BRAIN_WRITES FILE_READS FILE_WRITES \
-         TEST_RUNS TASKS_GREEN TASKS_TOTAL AI_BLOB_SCORE SPEC_DRIFT
+         TEST_RUNS TASKS_GREEN TASKS_TOTAL AI_BLOB_SCORE SPEC_DRIFT SESSION_MINUTES
 
   python3 - <<'PYEOF'
 import json, os
@@ -155,6 +181,8 @@ ai_blob_score  = int(os.environ["AI_BLOB_SCORE"])
 spec_drift     = os.environ["SPEC_DRIFT"]
 test_results   = json.loads(os.environ.get("TEST_RESULTS_JSON", "{}"))
 out_file       = os.environ["OUT_FILE"]
+session_minutes_raw = os.environ.get("SESSION_MINUTES", "null")
+session_minutes = None if session_minutes_raw == "null" else float(session_minutes_raw)
 
 # Pricing per 1M tokens (USD) — update when Anthropic changes rates
 PRICING = {
@@ -192,6 +220,7 @@ except FileNotFoundError:
 report = {
     "branch": branch,
     "generated_at": timestamp,
+    "session_minutes": session_minutes,
     "graphify_calls": graphify_calls,
     "brain_docs_read": brain_reads,
     "brain_docs_written": brain_writes,
@@ -430,7 +459,7 @@ case "$TOOL_NAME" in
       _emit graphify "call=${GCMD}"
     elif echo "$CMD" | grep -qE "brain/|obsidian"; then
       _emit brain_read "doc=${CMD}"
-    elif echo "$CMD" | grep -qE "rspec|pytest|npm test|bundle exec rspec"; then
+    elif echo "$CMD" | grep -qE "rspec|pytest|npm test|vitest|playwright test"; then
       _emit test_run
     fi
     ;;

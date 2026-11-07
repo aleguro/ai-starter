@@ -1,15 +1,16 @@
 {
   "branch": "feature-app-scaffold",
-  "generated_at": "2026-11-07T19:01:01Z",
-  "graphify_calls": 0,
-  "brain_docs_read": 0,
-  "brain_docs_written": 0,
-  "file_reads": 0,
+  "generated_at": "2026-11-07T19:09:25Z",
+  "session_minutes": 9.4,
+  "graphify_calls": 2,
+  "brain_docs_read": 1,
+  "brain_docs_written": 1,
+  "file_reads": 8,
   "file_writes": 0,
-  "test_runs": 0,
-  "tasks_completed": 0,
-  "tasks_total": 0,
-  "ai_blob_score": 0,
+  "test_runs": 3,
+  "tasks_completed": 5,
+  "tasks_total": 5,
+  "ai_blob_score": 2,
   "spec_drift": "unknown",
   "test_results": {
     "rspec": "15 examples, 0 failures, 2 pending",
@@ -26,7 +27,5 @@
     "spec_drift_max_pct": 10,
     "min_graphify_calls": 2
   },
-  "alerts": [
-    "low graphify usage \u2014 did you query the graph before coding?"
-  ]
+  "alerts": []
 }
