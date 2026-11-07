@@ -41,7 +41,7 @@
       "ai_blob_score": "int \u2014 functions > 40 lines without test coverage",
       "spec_drift": "string \u2014 description of out-of-scope changes",
       "cost": {
-        "total_usd": "float \u2014 total session cost in USD",
+        "total_usd": "float \u2014 real billed cost when the session transcript is found (~/.claude/projects/*/<CLAUDE_CODE_SESSION_ID>.jsonl): sums each assistant reply's actual usage (input/output/cache tokens), deduped by reply id, at real per-model pricing \u2014 same approach ponytail's band import uses. Falls back to a rough tool-I/O-size proxy (excludes system prompt, conversation history, model response text, cache tokens \u2014 structurally undercounts) only when no transcript is found, e.g. CI. Check cost.source to tell which one a given report used.",
         "by_model": {
           "<model>": {
             "input_tokens": "int",

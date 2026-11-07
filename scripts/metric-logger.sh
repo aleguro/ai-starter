@@ -217,6 +217,68 @@ try:
 except FileNotFoundError:
     pass
 
+# Real session cost: read straight from the session's own transcript (the
+# JSONL Claude Code itself writes under ~/.claude/projects/), not a proxy.
+# Each assistant reply's `usage` is the actual input/output/cache token
+# counts the Anthropic API billed for that reply — the same data the
+# ponytail band dashboard reads. Dedup by message id: a reply can appear
+# more than once in the transcript (retries, tool-loop continuations), and
+# counting it twice double-bills it.
+REAL_PRICING = {
+    # [input, 5m cache write, 1h cache write, cache read, output], USD per 1M tokens.
+    # https://platform.claude.com/docs/en/about-claude/pricing — checked 2026-11-07.
+    "claude-opus-5-5":   [4, 5, 8, 0.2, 20],
+    "claude-sonnet-5-5": [2, 2.5, 4, 0.1, 10],
+    "claude-sonnet-5":   [2, 2.5, 4, 0.2, 10],
+    "claude-haiku-5-5":  [0.1, 0.125, 0.2, 0.01, 0.5],
+    "claude-fable-5-1":  [10, 12.5, 20, 0.25, 50],
+}
+
+def real_session_cost():
+    import glob, re as _re
+    session_id = os.environ.get("CLAUDE_CODE_SESSION_ID")
+    if not session_id:
+        return None
+    claude_dir = os.environ.get("CLAUDE_CONFIG_DIR") or os.path.expanduser("~/.claude")
+    matches = glob.glob(os.path.join(claude_dir, "projects", "*", f"{session_id}.jsonl"))
+    if not matches:
+        return None
+    strip_date = lambda m: _re.sub(r"-\d{8}$", "", _re.sub(r"\[.*\]$", "", m))
+    seen, total, by_model = set(), 0.0, {}
+    with open(matches[0]) as f:
+        for line in f:
+            line = line.strip()
+            if not line.startswith("{"):
+                continue
+            try:
+                d = json.loads(line)
+            except Exception:
+                continue
+            if d.get("type") != "assistant":
+                continue
+            msg = d.get("message") or {}
+            u, model, mid = msg.get("usage"), msg.get("model"), msg.get("id")
+            if not u or not model or not mid or mid in seen:
+                continue
+            seen.add(mid)
+            prices = REAL_PRICING.get(strip_date(model))
+            if not prices:
+                continue
+            cc = u.get("cache_creation") or {}
+            w5 = cc.get("ephemeral_5m_input_tokens", 0) or 0
+            w1 = cc.get("ephemeral_1h_input_tokens", 0) or 0
+            inp  = u.get("input_tokens", 0) or 0
+            read = u.get("cache_read_input_tokens", 0) or 0
+            out  = u.get("output_tokens", 0) or 0
+            cost = (inp * prices[0] + w5 * prices[1] + w1 * prices[2] + read * prices[3] + out * prices[4]) / 1_000_000
+            total += cost
+            m = by_model.setdefault(model, {"replies": 0, "cost_usd": 0.0})
+            m["replies"] += 1
+            m["cost_usd"] = round(m["cost_usd"] + cost, 4)
+    return {"total_usd": round(total, 2), "by_model": by_model, "source": matches[0]}
+
+REAL_COST = real_session_cost()
+
 report = {
     "branch": branch,
     "generated_at": timestamp,
@@ -232,11 +294,19 @@ report = {
     "ai_blob_score": ai_blob_score,
     "spec_drift": spec_drift,
     "test_results": test_results,
-    "cost": {
-        "total_usd": round(total_cost, 4),
-        "by_model": cost_by_model,
-        "note": "Log usage with: scripts/metric-logger.sh cost <opus|sonnet|haiku> <input_tokens> <output_tokens>"
-    },
+    "cost": (
+        {
+            "total_usd": REAL_COST["total_usd"],
+            "by_model": REAL_COST["by_model"],
+            "source": "real (session transcript)",
+            "note": "Real billed tokens from the session's own transcript usage, deduped by reply id. See docs/metrics/baseline.json's schema note for details.",
+        } if REAL_COST else {
+            "total_usd": round(total_cost, 4),
+            "by_model": cost_by_model,
+            "source": "proxy (tool I/O size, NOT real cost)",
+            "note": "No session transcript found. This is a rough proxy from tool call I/O size — excludes the system prompt, conversation history, model output text, and cache tokens. Log a manual estimate with: scripts/metric-logger.sh cost <opus|sonnet|haiku> <input_tokens> <output_tokens>"
+        }
+    ),
     "thresholds": {
         "ai_blob_score_max": 20,
         "spec_drift_max_pct": 10,

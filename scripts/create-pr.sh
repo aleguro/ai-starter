@@ -46,6 +46,7 @@ TASKS_DONE=$(_report_val tasks_completed)
 TASKS_TOTAL_VAL=$(_report_val tasks_total)
 AI_BLOB=$(_report_val ai_blob_score)
 COST_USD=$(_report_val "cost.total_usd" "0")
+COST_SOURCE=$(_report_val "cost.source" "unknown")
 
 # Test results: build a markdown table from test_results dict in the report
 TEST_EVIDENCE=""
@@ -175,7 +176,7 @@ ${COMMIT_SUMMARY}
 | Tasks completed | ${TASKS_DONE} / ${TASKS_TOTAL_VAL} |
 | Test runs | ${TEST_RUNS} |
 | AI blob score | ${AI_BLOB} / 20 max |
-| Session cost | \$${COST_USD} |
+| Session cost (\`${COST_SOURCE}\`) | \$${COST_USD} |
 
 ## Graphify Usage (${GRAPHIFY_COUNT} queries)
 ${GRAPHIFY_QUERIES:-  _none — run graphify query before next feature_}
