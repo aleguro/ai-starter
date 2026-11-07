@@ -13,5 +13,4 @@ Session and feature productivity reports. Generated automatically by `/save`.
 
 ## Index
 
-- [[session-2026-11-07-feature-app-scaffold]]
-- [[app-scaffold-comparison]]
+_Session reports and feature comparisons appear here after `/save`._

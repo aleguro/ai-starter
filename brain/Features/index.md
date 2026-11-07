@@ -2,7 +2,7 @@
 title: Features
 tags: [index, features, tickets]
 created: 2026-11-01
-updated: 2026-11-07
+updated: 2026-11-01
 status: active
 type: index
 ---
@@ -18,7 +18,6 @@ One note per feature. Each note is a ticket that tracks the feature from idea to
 ## Index
 
 - [[driver-brain-update-per-layer]]
-- [[app-scaffold]]
 
 ## Template
 

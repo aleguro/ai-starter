@@ -12,6 +12,4 @@ _Most important entry points and what they do._
 
 ## Gotchas
 
-- [[devise-jwt-session-store-false]] — `sign_in` must pass `store: false` or JWT revocation silently doesn't work
-- [[odsl-install-generator-rails-8-1-bug]] — `odsl:install` generator crashes on Rails 8.1, worked around by hand-writing the migration
-- [[claude-project-dir-not-always-set]] — project hooks silently never fired all session; `$CLAUDE_PROJECT_DIR` is empty in some hosts
+_Things that surprised someone and are worth remembering._
